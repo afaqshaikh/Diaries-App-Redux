@@ -1,5 +1,5 @@
 const INITIAL_STATE ={
-    users :  [{
+    counter :  [{
         name : "Afaque"
     }],
 }

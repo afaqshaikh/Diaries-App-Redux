@@ -1,5 +1,11 @@
+// export const userLogin = "USERLOGIN" 
+
 const login = ()=>{
-    console.log("Login Clicked")
+    return(dispatch)=>{
+        console.log("Login Clicked")
+
+    }
+  
 }
 
 export{
