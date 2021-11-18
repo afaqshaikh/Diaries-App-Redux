@@ -2,6 +2,8 @@ const INITIAL_STATE ={
     counter :  [{
         name : "Afaque"
     }],
+    user: [],
+    current_user: {}
 }
 
 export default (state = INITIAL_STATE,action)  =>{

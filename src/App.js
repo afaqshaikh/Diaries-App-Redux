@@ -1,15 +1,11 @@
-import { useDispatch , useSelector } from 'react-redux';
-import {login} from './Config/store/action'
 
+import AppRouter from "./Config/route";
 function App() {
-  const counter = useSelector((state) => state.counter);
-  const dispatch = useDispatch()
-  console.log(counter);
+  // const counter = useSelector((state) => state.counter);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <button type="button" onClick={()=>dispatch(login())} className="btn btn-dark">Dark</button>
-      </header>
+      <AppRouter />
     </div>
   );
 }
