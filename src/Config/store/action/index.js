@@ -1,16 +1,26 @@
 // export const userLogin = "USERLOGIN" 
-import firebase,{createUserWithEmailAndPassword} from "../../firebase"
+import firebase from "../../firebase";
 
-const login = (e) => {
+
+const sign_up = (user,history) => {
     return (dispatch) => {
-        e.preventDefault()
-        console.log("Login Clicked")
-        const auth = getAuth();
-        firebase.createUserWithEmailAndPassword(auth)
+        const {email, pass } = user
+        firebase.auth().createUserWithEmailAndPassword(email , pass)
             .then((result) => {
-                var token = result.credential.accessToken;
                 const user = result.user;
-                console.log("User ==> ",user, token)
+
+                var create_user = {
+                    email : user.email,
+                    uid : user.uid
+                }
+                console.log(create_user)
+
+                firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
+                .then(()=>{
+                    dispatch({type : 'SETUSER',payload : create_user})
+                    history.push('/')
+                })
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -22,6 +32,35 @@ const login = (e) => {
 
 }
 
+const login = (user,history) => {
+    return(dispatch) => {
+        const {email, pass } = user
+        firebase.auth().signInWithEmailAndPassword(email , pass)
+        .then((result) => {
+            const user = result.user;
+
+            var create_user = {
+                email : user.email,
+                uid : user.uid
+            }
+            console.log(create_user)
+            firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
+            .then(()=>{
+                dispatch({type : 'SETUSER',payload : create_user})
+                history.push('/')
+            })
+        })
+        
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorMessage)
+        });
+
+    }
+}
+
 export {
+    sign_up,
     login
 }
