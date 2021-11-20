@@ -1,22 +1,24 @@
 
 const INITIAL_STATE ={
+    counter: {name:"afaque"},
     user: [],
-    current_user: {}
+    current_user: {},
 }
 
-export default (state = INITIAL_STATE,action)  =>{
+export default function DiaryReducer(state = INITIAL_STATE,action){
     switch (action.type) {
-        // case "GETUSERS" :
-        //     return ({
-        //         ...state,
-        //         users : action.payload
-        //     })
             case "SETUSER" :
             return ({
                 ...state,
                 current_user : action.payload
             })
-            default:
-                return state
+            default :
+            return state
     }
 }
+
+  // case "GETUSERS" :
+        //     return ({
+        //         ...state,
+        //         users : action.payload
+        //     })

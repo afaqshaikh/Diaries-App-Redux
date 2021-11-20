@@ -26,12 +26,12 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" name="email" onChange={handleChange} className="form-control" id="email" aria-describedby="emailHelp" />
+                    <input type="email" name="email" value={user.email} onChange={handleChange} className="form-control" id="email" aria-describedby="emailHelp" />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
                     <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" name="pass" onChange={handleChange} className="form-control" id="password" />
+                    <input type="password" value={user.pass} name="pass" onChange={handleChange} className="form-control" id="password" />
                 </div>
                 <button type="submit" onClick={() => dispatch(login(user, history))} className="btn btn-primary">Login</button>
             </form>
