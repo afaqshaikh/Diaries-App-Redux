@@ -1,5 +1,4 @@
 import AppRouter from "./Config/route";
-import {useSelector} from "react-redux"
 
 function App() {
 
