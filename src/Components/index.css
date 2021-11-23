@@ -1,0 +1,17 @@
+.login-buttons{
+    margin-right: 5px;
+}
+.site-link:hover{
+    color: #f2d88f !important;
+    text-decoration: underline !important;
+}
+.site-link{
+    margin-left: 5px !important;
+
+}
+.fab:hover{
+    color: black !important;
+}
+.form-label{
+    color: #fff;
+}

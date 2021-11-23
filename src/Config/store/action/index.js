@@ -11,7 +11,6 @@ const sign_up = (user, history) => {
                     email: user.email,
                     uid: user.uid
                 }
-                console.log(create_user)
 
                 firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
                     .then(() => {
@@ -21,9 +20,9 @@ const sign_up = (user, history) => {
 
             })
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
+                if (errorMessage) alert("Invalid Credentials")
+
             });
 
     }
@@ -37,11 +36,19 @@ const login = (user, history) => {
             .then((result) => {
                 const user = result.user;
 
+                if (!user) {
+                    <div className="text-center">
+                        <div className="spinner-border text-white fw-bold fs-1" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                }
+
                 var create_user = {
                     email: user.email,
                     uid: user.uid
                 }
-                console.log(create_user)
                 firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
                     .then(() => {
                         dispatch({ type: 'SETUSER', payload: create_user })
@@ -50,21 +57,20 @@ const login = (user, history) => {
             })
 
             .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorMessage)
+                if (errorMessage) alert("Invalid Credentials")
             });
 
     }
 }
 
 const get_diaries = () => {
-    return(dispatch) => {
+    return (dispatch) => {
         let diaries = []
-        firebase.database().ref('/').child('diary').on('child_added',(data)=>{
+        firebase.database().ref('/').child('diary').on('child_added', (data) => {
             diaries.push(data.val())
         })
-        dispatch({type : 'GETDIARIES' ,    payload: diaries})
+        dispatch({ type: 'GETDIARIES', payload: diaries })
     }
 }
 
