@@ -15,8 +15,15 @@ const sign_up = (user, history) => {
                 firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
                     .then(() => {
                         dispatch({ type: 'SETUSER', payload: create_user })
-                        history.push('/')
+                        history.push('/home')
                     })
+
+                    let diaries = []
+                    firebase.database().ref('/').child('diary').on('child_added', (data) => {
+                        diaries.push(data.val())
+                    })
+                    dispatch({ type: 'GETDIARIES', payload: diaries })   
+
 
             })
             .catch((error) => {
@@ -52,8 +59,15 @@ const login = (user, history) => {
                 firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
                     .then(() => {
                         dispatch({ type: 'SETUSER', payload: create_user })
-                        history.push('/')
+                        history.push('/home')
                     })
+
+                let diaries = []
+                    firebase.database().ref('/').child('diary').on('child_added', (data) => {
+                        diaries.push(data.val())
+                    })
+                    dispatch({ type: 'GETDIARIES', payload: diaries })   
+
             })
 
             .catch((error) => {
@@ -64,18 +78,8 @@ const login = (user, history) => {
     }
 }
 
-const get_diaries = () => {
-    return (dispatch) => {
-        let diaries = []
-        firebase.database().ref('/').child('diary').on('child_added', (data) => {
-            diaries.push(data.val())
-        })
-        dispatch({ type: 'GETDIARIES', payload: diaries })
-    }
-}
 
 export {
     sign_up,
     login,
-    get_diaries
 }
