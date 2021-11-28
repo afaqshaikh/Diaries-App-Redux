@@ -18,11 +18,11 @@ const sign_up = (user, history) => {
                         history.push('/home')
                     })
 
-                    let diaries = []
-                    firebase.database().ref('/').child('diary').on('child_added', (data) => {
-                        diaries.push(data.val())
-                    })
-                    dispatch({ type: 'GETDIARIES', payload: diaries })   
+                    // let diaries = []
+                    // firebase.database().ref('/').child('diary').on('child_added', (data) => {
+                    //     diaries.push(data.val())
+                    // })
+                    // dispatch({ type: 'GETDIARIES', payload: diaries })   
 
 
             })
@@ -43,14 +43,13 @@ const login = (user, history) => {
             .then((result) => {
                 const user = result.user;
 
-                if (!user) {
-                    <div className="text-center">
-                        <div className="spinner-border text-white fw-bold fs-1" role="status">
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    </div>
-
-                }
+               if(!user){
+  return <div className="d-flex mt-5 justify-content-center">
+  <div className="spinner-border text-primary"  style={{width: '3rem', height: '3rem'}} role="status">
+  <span className="visually-hidden">Loading...</span>
+</div>
+</div>
+  }  
 
                 var create_user = {
                     email: user.email,
@@ -62,11 +61,11 @@ const login = (user, history) => {
                         history.push('/home')
                     })
 
-                let diaries = []
-                    firebase.database().ref('/').child('diary').on('child_added', (data) => {
-                        diaries.push(data.val())
-                    })
-                    dispatch({ type: 'GETDIARIES', payload: diaries })   
+                // let diaries = []
+                //     firebase.database().ref('/').child('diary').on('child_added', (data) => {
+                //         diaries.push(data.val())
+                //     })
+                //     dispatch({ type: 'GETDIARIES', payload: diaries })   
 
             })
 

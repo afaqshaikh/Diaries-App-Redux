@@ -1,29 +1,50 @@
 import { useSelector } from "react-redux"
 import { useState } from "react"
 import firebase from "../Config/firebase"
+import Header from "./Header";
+import Footer from "./Footer";
+import { Link } from "react-router-dom"
+
 
 const Diary = () => {
     const user = useSelector((state) => state.current_user)
     const [diary , setDiary] = useState("")
+    let newDate = new Date()
+    var date = newDate.getFullYear() + '-' + (newDate.getMonth() + 1) + '-' + newDate.getDate()
+    var time = newDate.getHours() + ':' + newDate.getMinutes() + ':' + newDate.getSeconds();
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        firebase.database().ref('/').child(`diary/${user.uid}`).push({
+        firebase.database().ref('/').child(`diary`).push({
             message: diary,
             email: user.email,
             uid: user.uid,
+            date : date,
+            time : time
         })
         setDiary("")
     }
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                <textarea className="form-control" value={diary} onChange={e => setDiary(e.target.value)} aria-label="With textarea"></textarea>
+            <Header />
+            <div className ="container">
+                <div className="row mb-5 p-0">
+                    <div className=" p-0">
+                        <Link to="/home" className="btn btn-outline-warning">Back To Home</Link>
+                    </div>
                 </div>
-                <button type="submit" className="btn btn-primary">Create Diary </button>
-            </form>
+                <div className="row p-0">
+                    <form className="p-0"  onSubmit={handleSubmit}>
+                        <label htmlFor="email" className="form-label">Write Your Diary </label>
+                        <textarea className="form-control mb-3" style={{ height: '100px' }} placeholder="Enter Your Diary" value={diary} onChange={e => setDiary(e.target.value)} aria-label="With textarea"></textarea>
+                        <button type="submit" className="btn btn-outline-success">Create Diary </button>
+                    </form>
+                </div>
+              
+            </div>
+           
+            <Footer />
         </div>
     )
 }
