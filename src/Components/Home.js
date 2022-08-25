@@ -2,32 +2,37 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom"
 import firebase from '../Config/firebase'
-import {useEffect , useState} from 'react'
+import { useEffect, useState } from 'react'
 import "./index.css"
-
+import Card from "./Card";
+import Preloader from "./Preloader";
 
 const Home = () => {
 
-    let [diary,setDiary] = useState([])
+    let [diary, setDiary] = useState()
+    const [loading,setLoading] = useState(true)
 
-    useEffect(()=>{
-        async function getDiaries(){
-            const diaries = await firebase.database().ref('/').child('diary').on('child_added',(data)=>{
-                setDiary(data.val())
-            })
-        }
+    const getDiaries = () => {
+        firebase.database().ref('/').child('diary').get().then((snapshot) => {
+            const data = []
+            if (snapshot.exists()) {
+                snapshot.forEach((doc)=>{
+                    data.push(doc.val())
+                })
+                
+            } else {
+                console.log("No data available");
+            }
+            setDiary(data);
+            setLoading(false)
+        }).catch((error) => {
+            alert(error);
+        })
+    }
+
+    useEffect(() => {
         getDiaries()
-    },[])
-    console.log(diary)
-  
-  if(!diary){
-  return <div className="d-flex mt-5 justify-content-center">
-  <div className="spinner-border text-primary"  style={{width: '3rem', height: '3rem'}} role="status">
-  <span className="visually-hidden">Loading...</span>
-</div>
-</div>
-  }       
-
+    }, [])
 
     return (
         <div className="">
@@ -38,33 +43,12 @@ const Home = () => {
                         <Link to="/diary" className="btn btn-success">Create Diary</Link>
                     </div>
                 </div>
-                
-                {/* {diary && diary.map((v,i)=>{console.log(v)})} */}
-
-                <div className="row">
-                    <textarea className="form-control rounded-0 rounded-top"  placeholder="Leave a comment here" style={{ height: '100px' }}>
-                        Hello my name is babun!!!
-                    </textarea>
-                </div>
-                <div className="row mb-4 bg-dark rounded-bottom text-end">
-                    <p className="text-white mt-2">Time</p>
-                </div>
-                <div className="row">
-                    <textarea className="form-control rounded-0 rounded-top"  placeholder="Leave a comment here" style={{ height: '100px' }}>
-                        Hello my name is babun!!!
-                    </textarea>
-                </div>
-                <div className="row mb-4 bg-dark rounded-bottom text-end">
-                    <p className="text-white mt-2">Time</p>
-                </div>
-                <div className="row">
-                    <textarea className="form-control rounded-0 rounded-top"  placeholder="Leave a comment here" style={{ height: '100px' }}>
-                        Hello my name is babun!!!
-                    </textarea>
-                </div>
-                <div className="row mb-4 bg-dark rounded-bottom text-end">
-                    <p className="text-white mt-2">Time</p>
-                </div>
+                {loading ? <Preloader />
+                :
+                diary.map((val,indx)=>{
+                  return <Card key={indx} date={val.date} time={val.time} message={val.message}/>
+                })
+                }
             </div>
             <Footer />
         </div>

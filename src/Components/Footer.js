@@ -2,11 +2,11 @@ import "./index.css"
 
 const Footer = () => {
     return (
-        <div className="container-fluid p-4 fixed-bottom bg-dark">
+        <div className="container-fluid p-4 bg-dark">
             <div className="row">
                 <div className="col  text-center">
                     <h5 className="text-white fw-bold" >Developed By
-                        <a className="site-link text-decoration-none fst-italic text-white fs-4 fw-bold" rel="noreferrer" target="_blank" href="https://afaqueshaikh-portfolio.web.app">Technical Haji</a>
+                        <a className="site-link text-decoration-none fst-italic text-white fs-4 fw-bold" rel="noreferrer" target="_blank" href="https://afaqueshaikh-portfolio.web.app">Developer Afaque</a>
                     </h5>
                 </div>
                 <div className="col site-icons text-center">

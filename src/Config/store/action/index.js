@@ -6,34 +6,21 @@ const sign_up = (user, history) => {
         firebase.auth().createUserWithEmailAndPassword(email, pass)
             .then((result) => {
                 const user = result.user;
-
                 var create_user = {
                     email: user.email,
                     uid: user.uid
                 }
-
                 firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
                     .then(() => {
                         dispatch({ type: 'SETUSER', payload: create_user })
-                        history.push('/home')
+                        history.push('/')
                     })
-
-                    // let diaries = []
-                    // firebase.database().ref('/').child('diary').on('child_added', (data) => {
-                    //     diaries.push(data.val())
-                    // })
-                    // dispatch({ type: 'GETDIARIES', payload: diaries })   
-
-
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                if (errorMessage) alert("Invalid Credentials")
-
+                if (errorMessage) alert(errorMessage)
             });
-
     }
-
 }
 
 const login = (user, history) => {
@@ -42,41 +29,19 @@ const login = (user, history) => {
         firebase.auth().signInWithEmailAndPassword(email, pass)
             .then((result) => {
                 const user = result.user;
-
-               if(!user){
-  return <div className="d-flex mt-5 justify-content-center">
-  <div className="spinner-border text-primary"  style={{width: '3rem', height: '3rem'}} role="status">
-  <span className="visually-hidden">Loading...</span>
-</div>
-</div>
-  }  
-
-                var create_user = {
+                var login_user = {
                     email: user.email,
                     uid: user.uid
                 }
-                firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
-                    .then(() => {
-                        dispatch({ type: 'SETUSER', payload: create_user })
-                        history.push('/home')
-                    })
-
-                // let diaries = []
-                //     firebase.database().ref('/').child('diary').on('child_added', (data) => {
-                //         diaries.push(data.val())
-                //     })
-                //     dispatch({ type: 'GETDIARIES', payload: diaries })   
-
+                dispatch({ type: 'SETUSER', payload: login_user })
+                history.push('/') 
             })
-
             .catch((error) => {
                 const errorMessage = error.message;
                 if (errorMessage) alert("Invalid Credentials")
             });
-
     }
 }
-
 
 export {
     sign_up,

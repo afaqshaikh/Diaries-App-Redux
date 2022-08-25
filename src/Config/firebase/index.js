@@ -3,13 +3,13 @@ import 'firebase/auth';
 import 'firebase/database'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6R1ZF2-4r2cWoE1siOWy90QmFQaULLCs",
-  authDomain: "diaries-app-a0136.firebaseapp.com",
-  projectId: "diaries-app-a0136",
-  storageBucket: "diaries-app-a0136.appspot.com",
-  messagingSenderId: "611392829820",
-  appId: "1:611392829820:web:7e16ebdd2b86ab04374cf9",
-  measurementId: "G-YZZ5MVNKZD"
+  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_SENDERID,
+  appId: process.env.REACT_APP_FIREBASE_APIID,
+  measurementId: process.env.REACT_APP_MEASUREMENTID
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);

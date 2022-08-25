@@ -11,13 +11,17 @@ const Login = () => {
     let history = useHistory();
     const dispatch = useDispatch()
     const [user, setUser] = useState({ email: "", pass: "" })
+    const [buttonText,setButtontext] = useState("Login")
+
 
     var handleSubmit = (e) => {
         e.preventDefault()
-        setUser({
-            email: "",
-            pass: ""
-        })
+        setButtontext("Loading....")
+        dispatch(login(user, history))
+        // setUser({
+        //     email: "",
+        //     pass: ""
+        // })
     }
 
     var handleChange = (e) => {
@@ -38,7 +42,7 @@ const Login = () => {
                         <label htmlFor="password" className="form-label">Password</label>
                         <input type="password" value={user.pass} name="pass" onChange={handleChange} className="form-control" id="password" />
                     </div>
-                    <button type="submit" onClick={() => dispatch(login(user, history))} className="btn btn-primary">Login</button>
+                    <button type="submit" className={buttonText === "Loading...." ? "disabled btn btn-primary" :"btn btn-primary"}>{buttonText}</button>
                 </form>
             </div>
             <Footer />
