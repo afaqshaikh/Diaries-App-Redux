@@ -1,6 +1,7 @@
+import swal from "sweetalert";
 import firebase from "../../firebase";
 
-const sign_up = (user, history) => {
+const sign_up = (user, history, setButtontext) => {
     return (dispatch) => {
         const { email, pass } = user
         firebase.auth().createUserWithEmailAndPassword(email, pass)
@@ -13,17 +14,24 @@ const sign_up = (user, history) => {
                 firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
                     .then(() => {
                         dispatch({ type: 'SETUSER', payload: create_user })
-                        history.push('/')
+                        swal("Good job!", "Signup Sucessful", "success").then((res => {
+                            if (res) {
+                                history.push('/')
+                            }
+                        }))
                     })
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                if (errorMessage) alert(errorMessage)
+                if (errorMessage) {
+                    swal("Error!", `${errorMessage}`, "error");
+                    setButtontext("Sign Up")
+                }
             });
     }
 }
 
-const login = (user, history) => {
+const login = (user, history, setButtontext) => {
     return (dispatch) => {
         const { email, pass } = user
         firebase.auth().signInWithEmailAndPassword(email, pass)
@@ -34,11 +42,18 @@ const login = (user, history) => {
                     uid: user.uid
                 }
                 dispatch({ type: 'SETUSER', payload: login_user })
-                history.push('/') 
+                swal("Good job!", "Login Sucessful", "success").then((res => {
+                    if (res) {
+                        history.push('/')
+                    }
+                }))
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                if (errorMessage) alert("Invalid Credentials")
+                if (errorMessage) {
+                    swal("Error!", "Invalid Credentials", "error");
+                    setButtontext("Login")
+                }
             });
     }
 }

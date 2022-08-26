@@ -1,20 +1,24 @@
 import "./index.css"
 
-const Footer = () => {
+const Footer = ({position}) => {
     return (
-        <div className="container-fluid p-4 bg-dark">
-            <div className="row">
-                <div className="col  text-center">
+        <div className={position === "fixed-bottom" ? "container-fluid p-4 bg-dark fixed-bottom":"container-fluid p-4 bg-dark "}>
+            <div className="row ">
+                <div className="col-lg-8 col-md-8 col-sm-6">
                     <h5 className="text-white fw-bold" >Developed By
-                        <a className="site-link text-decoration-none fst-italic text-white fs-4 fw-bold" rel="noreferrer" target="_blank" href="https://afaqueshaikh-portfolio.web.app">Developer Afaque</a>
+                        <a className="site-link text-decoration-none fst-italic text-white fs-4 fw-bold"
+                         rel="noreferrer"
+                          target="_blank"
+                           href="https://afaqueshaikh-portfolio.web.app"
+                           >Developer Afaque</a>
                     </h5>
                 </div>
-                <div className="col site-icons text-center">
+                <div className="col-lg-4 col-md-4 col-sm-6 site-icons text-end">
                     <a
                         title="facebook"
                         rel="noreferrer"
                         target="_blank"
-                        href="https://www.facebook.com/technicalhajiofficial"
+                        href="https://www.facebook.com/developerafaqueofficial"
                     >
                         <i className="fab fa-facebook text-white fs-3 "></i>
                     </a>

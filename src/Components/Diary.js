@@ -4,6 +4,7 @@ import firebase from "../Config/firebase"
 import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom"
+import swal from "sweetalert";
 
 
 const Diary = () => {
@@ -26,8 +27,11 @@ const Diary = () => {
             time: time
         })
             .then(() => {
+                swal("Good job!", "Diary has been Created", "success");
                 setDiary("")
                 setButtontext("Write Diary")
+            }).catch((err)=>{
+                swal("Error!", `${err.message}`, "error");
             })
     }
 
@@ -50,7 +54,7 @@ const Diary = () => {
 
             </div>
 
-            <Footer />
+            <Footer position="fixed-bottom"/>
         </div>
     )
 }
